@@ -4,11 +4,18 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
-public class tankDrive extends CommandBase {
-  /** Creates a new tankDrive. */
-  public tankDrive() {
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.DriveBase;
+
+public class Drive extends CommandBase {
+  private DriveBase tDriveBase;
+  /** Creates a new Drive. */
+  public Drive(DriveBase drivebase) {
+    addRequirements(drivebase);
+    tDriveBase = drivebase;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -18,11 +25,18 @@ public class tankDrive extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    double joyValueL = -RobotContainer.driver.getRawAxis(1);
+    double joyValueR = -RobotContainer.driver.getRawAxis(5);
+    tDriveBase.move(ControlMode.PercentOutput, joyValueL, joyValueR);
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    tDriveBase.move(ControlMode.PercentOutput, 0, 0);
+  }
 
   // Returns true when the command should end.
   @Override
