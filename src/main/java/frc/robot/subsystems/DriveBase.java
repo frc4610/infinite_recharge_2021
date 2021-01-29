@@ -25,8 +25,8 @@ public class DriveBase extends SubsystemBase {
     driveBackR = new VictorSPX(3);
     driveBackL.follow(driveFrontL);
     driveBackR.follow(driveFrontR);
-    driveFrontR.setInverted(true);
-    driveBackR.setInverted(true);
+    driveFrontL.setInverted(true);
+    driveBackL.setInverted(true);
     RobotContainer.initMotor(driveFrontL, peak);
     RobotContainer.initMotor(driveFrontR, peak);
     RobotContainer.initMotor(driveBackL, peak);
@@ -34,7 +34,8 @@ public class DriveBase extends SubsystemBase {
   }
     
   public void move(ControlMode mode, double speedL, double speedR) {
-
+    driveFrontR.set(mode, speedL);
+    driveFrontL.set(mode, speedR);
   }
 
   @Override
