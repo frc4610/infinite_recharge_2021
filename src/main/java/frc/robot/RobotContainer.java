@@ -11,10 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.Drive;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -24,10 +21,8 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final static DriveBase driveBase = new DriveBase();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final static Drive tDrive = new Drive(driveBase);
 
   public static Joystick driver = new Joystick(0);
@@ -51,10 +46,6 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
-  }
 
   public static void initMotor(VictorSPX motor, double peak) {
       motor.configPeakOutputForward(peak);
