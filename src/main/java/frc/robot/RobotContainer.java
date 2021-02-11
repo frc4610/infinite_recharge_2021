@@ -5,32 +5,41 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.TurretMove;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private static Turret turret;
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final static DriveBase driveBase = new DriveBase();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final static Drive tDrive = new Drive(driveBase);
+  private final static TurretMove tUrret= new TurretMove(turret);
 
   public static Joystick driver = new Joystick(0);
+  public static Joystick operator = new Joystick(1);
+  public static JoystickButton operatorLeftBumper = new JoystickButton(operator, 5);
+  public static JoystickButton operatorRightBumper = new JoystickButton(operator, 6);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -56,10 +65,10 @@ public class RobotContainer {
     return m_autoCommand;
   }
 
-  public static void initMotor(VictorSPX motor, double peak) {
-      motor.configPeakOutputForward(peak);
-      motor.configPeakOutputReverse(-peak);
-      motor.setNeutralMode(NeutralMode.Brake);
+  public static void initMotor(TalonFX driveFrontL, double peak) {
+      driveFrontL.configPeakOutputForward(peak);
+      driveFrontL.configPeakOutputReverse(-peak);
+      driveFrontL.setNeutralMode(NeutralMode.Brake);
   }
 
   public static void startDrive() {
