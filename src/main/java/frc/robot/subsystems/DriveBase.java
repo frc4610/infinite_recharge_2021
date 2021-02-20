@@ -18,7 +18,7 @@ public class DriveBase extends SubsystemBase {
 
   /** Creates a new DriveBase. */
   public DriveBase() {
-    peak = 1;
+    peak = 1; // What is "Peak"?
     driveFrontL = new VictorSPX(0);
     driveFrontR = new VictorSPX(1);
     driveBackL = new VictorSPX(2);
