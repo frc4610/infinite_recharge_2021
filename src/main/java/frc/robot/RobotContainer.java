@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -27,14 +28,14 @@ import edu.wpi.first.wpilibj2.command.Command;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private static Turret turret;
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final static DriveBase driveBase = new DriveBase();
+  private final static Turret turret = new Turret();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final static Drive tDrive = new Drive(driveBase);
-  private final static TurretMove tUrret= new TurretMove(turret);
+  private final static TurretMove turretMove = new TurretMove(turret);
 
   public static Joystick driver = new Joystick(0);
   public static Joystick operator = new Joystick(1);
@@ -66,12 +67,20 @@ public class RobotContainer {
   }
 
   public static void initMotor(TalonFX driveFrontL, double peak) {
-      driveFrontL.configPeakOutputForward(peak);
-      driveFrontL.configPeakOutputReverse(-peak);
-      driveFrontL.setNeutralMode(NeutralMode.Brake);
+    driveFrontL.configPeakOutputForward(peak);
+    driveFrontL.configPeakOutputReverse(-peak);
+    driveFrontL.setNeutralMode(NeutralMode.Brake);
   }
 
   public static void startDrive() {
     tDrive.schedule(true);
+  }
+
+  public static void initMotor(TalonSRX turretmotor, double peak) {
+    turretmotor.configPeakOutputForward(peak);
+  }
+
+  public static void startTurretMove() {
+    turretMove.schedule(true);
   }
 }

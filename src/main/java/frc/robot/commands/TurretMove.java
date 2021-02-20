@@ -26,14 +26,18 @@ public class TurretMove extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    boolean joyButtonLBump = RobotContainer.operatorLeftBumper.get();
-    boolean joyButtonRBump = RobotContainer.operatorRightBumper.get();
-    sTurret.move(ControlMode.PercentOutput, joyButtonLBump);
-    sTurret.moveinv(ControlMode.PercentOutput, joyButtonRBump);
+    if(RobotContainer.operatorLeftBumper.get()) {
+      sTurret.move(ControlMode.PercentOutput, 1);
+    }
+    else if(RobotContainer.operatorRightBumper.get()) {
+      sTurret.move(ControlMode.PercentOutput, -1);
+    }
+    else {
+      sTurret.move(ControlMode.PercentOutput, 0);
+    }
 
   }
   
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
