@@ -5,24 +5,24 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveBase extends SubsystemBase {
-  private VictorSPX driveFrontL;
-  private VictorSPX driveFrontR;
-  private VictorSPX driveBackL;
-  private VictorSPX driveBackR;
+  private TalonFX driveFrontL;
+  private TalonFX driveFrontR;
+  private TalonFX driveBackL;
+  private TalonFX driveBackR;
   private double peak;
 
   /** Creates a new DriveBase. */
   public DriveBase() {
     peak = 1; // What is "Peak"?
-    driveFrontL = new VictorSPX(0);
-    driveFrontR = new VictorSPX(1);
-    driveBackL = new VictorSPX(2);
-    driveBackR = new VictorSPX(3);
+    driveFrontL = new TalonFX(0);
+    driveFrontR = new TalonFX(1);
+    driveBackL = new TalonFX(2);
+    driveBackR = new TalonFX(3);
     driveBackL.follow(driveFrontL);
     driveBackR.follow(driveFrontR);
     driveFrontL.setInverted(true);

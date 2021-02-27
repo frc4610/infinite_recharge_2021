@@ -3,7 +3,10 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Launcher;
 
 public class Launch extends CommandBase {
@@ -29,7 +32,8 @@ public void Launcher()
   @Override
   public void execute() 
   {
-    launcher.launch();
+    double triggerValue = RobotContainer.driver.getRawAxis(3);
+    launcher.launch(ControlMode.PercentOutput, triggerValue);
   }
   // Called once the command ends or is interrupted.
   @Override

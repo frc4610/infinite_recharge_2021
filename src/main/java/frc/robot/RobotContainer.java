@@ -5,7 +5,8 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -64,7 +65,7 @@ public class RobotContainer {
     return m_autoCommand;
   }
 
-  public static void initMotor(VictorSPX motor, double peak) {
+  public static void initMotor(TalonFX motor, double peak) {
       motor.configPeakOutputForward(peak);
       motor.configPeakOutputReverse(-peak);
       motor.setNeutralMode(NeutralMode.Brake);
@@ -72,5 +73,10 @@ public class RobotContainer {
 
   public static void startDrive() {
     tDrive.schedule(true);
+  }
+
+  public static void startLauncher()
+  {
+    launch.schedule(true);
   }
 }

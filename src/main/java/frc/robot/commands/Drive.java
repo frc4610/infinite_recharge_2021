@@ -14,7 +14,6 @@ public class Drive extends CommandBase {
   private DriveBase tDriveBase;
   /** Creates a new Drive. */
   public Drive(DriveBase drivebase) {
-    //addRequirements(drivebase);
     tDriveBase = drivebase;
     // Use addRequirements() here to declare subsystem dependencies.
   }
