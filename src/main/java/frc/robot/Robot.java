@@ -41,12 +41,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-
-    
-
-    //drive = new Drive(driveBase);
-
-  m_robotContainer = new RobotContainer();
     driveBase = new DriveBase();
     turret = new Turret();
   
@@ -79,7 +73,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     String trajectoryJSON = "paths/Slalom_Path.wpilib.json";
-Trajectory trajectory = new Trajectory();
+  Trajectory trajectory = new Trajectory();
 try {
   Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
   trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
