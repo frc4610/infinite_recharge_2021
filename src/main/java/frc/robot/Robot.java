@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.Drive;
@@ -13,16 +14,17 @@ import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Turret;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to each mode, as described in the TimedRobot
+ * documentation. If you change the name of this class or the package after
+ * creating this project, you must also update the build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
   public static DriveBase driveBase;
   public Drive drive;
   public static Turret turret;
-  public TurretMove turretMove; 
+  public TurretMove turretMove;
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -94,7 +96,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    SmartDashboard.putNumber("Turret Encoder Value", turret.getTurretEncoderValue());
+  }
 
   @Override
   public void testInit() {

@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
@@ -28,4 +29,16 @@ public class Turret extends SubsystemBase {
     turretmotor.set(percentoutput, d);
   }
 
+  public void spinturret(double position) {
+    turretmotor.set(ControlMode.Position, position);
+  }
+
+  public double getTurretEncoderValue() {
+    return turretmotor.getSelectedSensorPosition();
+    // 4096 pulses/revolution / 43.2 degrees/revolution = 94.81 pulses/degree
+  }
+
+  public void resetEncoder() {
+    turretmotor.setSelectedSensorPosition(0);
+  }
 }

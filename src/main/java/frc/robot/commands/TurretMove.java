@@ -13,6 +13,9 @@ import frc.robot.subsystems.Turret;
 public class TurretMove extends CommandBase {
   /** Creates a new TurretMove. */
   private Turret sTurret;
+  private double actualangle;
+  private double cwmovement;
+  private double ccwmovement;
 
   public TurretMove(Turret turret) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -21,16 +24,23 @@ public class TurretMove extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
-
+  public void initialize() {
+    sTurret.resetEncoder();
+  }
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    actualangle = sTurret.getTurretEncoderValue();
+    cwmovement = actualangle + (15 * 94.81);
+    ccwmovement = actualangle - (15 * 94.81);
     if(RobotContainer.operatorLeftBumper.get()) {
-      sTurret.move(ControlMode.PercentOutput, 1);
+      sTurret.move(ControlMode.PercentOutput, .1);
+      //sTurret.spinturret(cwmovement);
     }
     else if(RobotContainer.operatorRightBumper.get()) {
-      sTurret.move(ControlMode.PercentOutput, -1);
+      sTurret.move(ControlMode.PercentOutput, -.1);
+      //sTurret.spinturret(-ccwmovement);
     }
     else {
       sTurret.move(ControlMode.PercentOutput, 0);
