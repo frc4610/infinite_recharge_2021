@@ -13,12 +13,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.Drive;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.TurretMove;
+
 import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.TurretMove;
 import frc.robot.subsystems.Turret;
-import edu.wpi.first.wpilibj2.command.Command;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -29,11 +28,9 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final static DriveBase driveBase = new DriveBase();
   private final static Turret turret = new Turret();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final static Drive tDrive = new Drive(driveBase);
   private final static TurretMove turretMove = new TurretMove(turret);
 
@@ -61,12 +58,15 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
-  }
 
-  public static void initMotor(TalonFX driveFrontL, double peak) {
+  public static void initMotor(TalonSRX turretmotor, double peak) {
+
+      turretmotor.configPeakOutputForward(peak);
+      turretmotor.configPeakOutputReverse(-peak);
+      turretmotor.setNeutralMode(NeutralMode.Brake);
+  }
+  public static void initMotor(TalonFX driveFrontL, double peak)
+  {
     driveFrontL.configPeakOutputForward(peak);
     driveFrontL.configPeakOutputReverse(-peak);
     driveFrontL.setNeutralMode(NeutralMode.Brake);
@@ -76,9 +76,6 @@ public class RobotContainer {
     tDrive.schedule(true);
   }
 
-  public static void initMotor(TalonSRX turretmotor, double peak) {
-    turretmotor.configPeakOutputForward(peak);
-  }
 
   public static void startTurretMove() {
     turretMove.schedule(true);
