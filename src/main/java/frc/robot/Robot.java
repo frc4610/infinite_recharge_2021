@@ -9,8 +9,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.Drive;
+import frc.robot.commands.IntakeArticulation;
+import frc.robot.commands.Launch;
 import frc.robot.commands.TurretMove;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Launcher;
+import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.Turret;
 
 /**
@@ -25,6 +29,10 @@ public class Robot extends TimedRobot {
   public Drive drive;
   public static Turret turret;
   public TurretMove turretMove;
+  public static Launcher launcher;
+  public Launch launch;
+  public static Pneumatics pneumatics;
+  public IntakeArticulation intakeArticulation;
   private Command m_autonomousCommand;
 
 
@@ -38,7 +46,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     driveBase = new DriveBase();
     turret = new Turret();
-  
+    launcher = new Launcher();
+    pneumatics = new Pneumatics();
+
   }
 
   /**
@@ -81,6 +91,8 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     RobotContainer.startDrive();
     RobotContainer.startTurretMove();
+    RobotContainer.startLaunch();
+    RobotContainer.startIntakeArticulation();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

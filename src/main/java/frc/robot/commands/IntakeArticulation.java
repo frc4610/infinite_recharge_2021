@@ -4,50 +4,42 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Pneumatics;
 
-public class TurretMove extends CommandBase {
-  /** Creates a new TurretMove. */
-  private Turret sTurret;
-  private double actualangle;
-  private double cwmovement;
-  private double ccwmovement;
-
-  public TurretMove(Turret turret) {
+public class IntakeArticulation extends CommandBase {
+  private Pneumatics pneumatics;
+  private Intake intake;
+  /** Creates a new IntakeArticulation. */
+  public IntakeArticulation(Pneumatics air, Intake intakes) {
+    pneumatics = air;
+    intake = intakes;
     // Use addRequirements() here to declare subsystem dependencies.
-    sTurret = turret;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    sTurret.resetEncoder();
-  }
-  
+  public void initialize() {}
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    actualangle = sTurret.getTurretEncoderValue();
-    cwmovement = actualangle + (15 * 94.81);
-    ccwmovement = actualangle - (15 * 94.81);
     if(RobotContainer.driverLeftBumper.get()) {
-      sTurret.move(ControlMode.PercentOutput, .1);
-      //sTurret.spinturret(cwmovement);
+      pneumatics.forward();
     }
     else if(RobotContainer.driverRightBumper.get()) {
-      sTurret.move(ControlMode.PercentOutput, -.1);
-      //sTurret.spinturret(-ccwmovement);
+      pneumatics.reverse();
+    }
+    else if(RobotContainer.operatorAButton.get()) {
+      intake.intakepc();
     }
     else {
-      sTurret.move(ControlMode.PercentOutput, 0);
+      pneumatics.off();
     }
-
   }
-  
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}

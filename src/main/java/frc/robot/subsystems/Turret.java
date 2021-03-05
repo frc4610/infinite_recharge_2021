@@ -15,7 +15,7 @@ public class Turret extends SubsystemBase {
   private TalonSRX turretmotor;
 
   public Turret() {
-    turretmotor = new TalonSRX(4);
+    turretmotor = new TalonSRX(8);
     RobotContainer.initMotor(turretmotor, 1);
   }
 
