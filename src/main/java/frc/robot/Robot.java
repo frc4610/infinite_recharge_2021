@@ -4,13 +4,23 @@
 
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.Drive;
 import frc.robot.commands.Launch;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Launcher;
+import frc.robot.commands.TurretMove;
+import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Turret;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,11 +31,12 @@ import frc.robot.subsystems.Launcher;
 public class Robot extends TimedRobot {
   public static DriveBase driveBase;
   public Drive drive;
+  public static Turret turret;
+  public TurretMove turretMove; 
   private Command m_autonomousCommand;
   public Launcher launcher;
   public Launch launch;
 
-  private RobotContainer m_robotContainer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -35,10 +46,10 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
-    //drive = new Drive(driveBase);
     driveBase = new DriveBase();
     launcher = new Launcher();
+    turret = new Turret();
+ 
   }
 
   /**
@@ -67,11 +78,18 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    String trajectoryJSON = "paths/Slalom_Path.wpilib.json";
+  Trajectory trajectory = new Trajectory();
+try {
+  Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+  trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+} catch (IOException ex) {
+  DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+}
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+      m_autonomousCommand.schedule(true);
     }
   }
 
@@ -83,6 +101,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     RobotContainer.startDrive();
     RobotContainer.startLauncher();
+    RobotContainer.startTurretMove();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
