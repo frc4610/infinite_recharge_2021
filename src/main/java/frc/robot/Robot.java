@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.Drive;
+import frc.robot.commands.Launch;
+import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Launcher;
 import frc.robot.commands.TurretMove;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Turret;
@@ -31,6 +34,8 @@ public class Robot extends TimedRobot {
   public static Turret turret;
   public TurretMove turretMove; 
   private Command m_autonomousCommand;
+  public Launcher launcher;
+  public Launch launch;
 
 
   /**
@@ -42,8 +47,9 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     driveBase = new DriveBase();
+    launcher = new Launcher();
     turret = new Turret();
-  
+ 
   }
 
   /**
@@ -94,6 +100,7 @@ try {
   @Override
   public void teleopInit() {
     RobotContainer.startDrive();
+    RobotContainer.startLauncher();
     RobotContainer.startTurretMove();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to

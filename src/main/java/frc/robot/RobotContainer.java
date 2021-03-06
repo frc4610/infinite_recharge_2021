@@ -7,16 +7,21 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.Drive;
-
+import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.Launch;
+import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Launcher;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.commands.TurretMove;
 import frc.robot.subsystems.Turret;
+
 
 
 /**
@@ -27,6 +32,19 @@ import frc.robot.subsystems.Turret;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+ 
+  // subsystems
+  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final static DriveBase driveBase = new DriveBase();
+  private final static Launcher launcher = new Launcher();
+
+  //Commands
+  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final static Drive tDrive = new Drive(driveBase);
+  private final static Launch launch = new Launch(launcher); 
+  
+  //Controllers
+  
   // The robot's subsystems and commands are defined here...
   private final static DriveBase driveBase = new DriveBase();
   private final static Turret turret = new Turret();
@@ -38,6 +56,7 @@ public class RobotContainer {
   public static Joystick operator = new Joystick(1);
   public static JoystickButton operatorLeftBumper = new JoystickButton(operator, 5);
   public static JoystickButton operatorRightBumper = new JoystickButton(operator, 6);
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -59,6 +78,12 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
 
+
+  public static void initMotor(TalonFX motor, double peak) {
+      motor.configPeakOutputForward(peak);
+      motor.configPeakOutputReverse(-peak);
+      motor.setNeutralMode(NeutralMode.Brake);
+
   public static void initMotor(TalonSRX turretmotor, double peak) {
 
       turretmotor.configPeakOutputForward(peak);
@@ -70,6 +95,7 @@ public class RobotContainer {
     driveFrontL.configPeakOutputForward(peak);
     driveFrontL.configPeakOutputReverse(-peak);
     driveFrontL.setNeutralMode(NeutralMode.Brake);
+
   }
 
   public static void startDrive() {
@@ -77,7 +103,13 @@ public class RobotContainer {
   }
 
 
+  public static void startLauncher()
+  {
+    launch.schedule(true);
+
+
   public static void startTurretMove() {
     turretMove.schedule(true);
+
   }
 }
