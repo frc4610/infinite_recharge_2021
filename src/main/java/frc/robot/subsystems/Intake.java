@@ -13,7 +13,7 @@ public class Intake extends SubsystemBase {
   private CANSparkMax IntakeMotor;
   /** Creates a new Intake. */
   public Intake() {
-    IntakeMotor = new CANSparkMax(5, MotorType.kBrushless);
+    IntakeMotor = new CANSparkMax(10, MotorType.kBrushless);
   }
 
   public void intakepc() {

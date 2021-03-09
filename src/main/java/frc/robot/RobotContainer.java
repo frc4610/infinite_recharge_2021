@@ -79,9 +79,9 @@ public class RobotContainer {
 
   public static void initMotor(TalonSRX turretmotor, double peak) {
 
-      turretmotor.configPeakOutputForward(peak);
-      turretmotor.configPeakOutputReverse(-peak);
-      turretmotor.setNeutralMode(NeutralMode.Brake);
+    turretmotor.configPeakOutputForward(peak);
+    turretmotor.configPeakOutputReverse(-peak);
+    turretmotor.setNeutralMode(NeutralMode.Brake);
   }
   public static void initMotor(TalonFX driveFrontL, double peak)
   {
@@ -105,4 +105,5 @@ public class RobotContainer {
   public static void startIntakeArticulation() {
     intakeArticulation.schedule(true);
   }
+
 }

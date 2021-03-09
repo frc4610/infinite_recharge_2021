@@ -106,6 +106,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     SmartDashboard.putNumber("Turret Encoder Value", turret.getTurretEncoderValue());
+    SmartDashboard.putBoolean("Compr. Enabled", pneumatics.compressorenabled());
+    SmartDashboard.putBoolean("Pressure Switch", pneumatics.pressureSwitch());
+    SmartDashboard.putNumber("Compr. Current", pneumatics.compressorcurrent());
+    SmartDashboard.putNumber("Avr. Motor Temp.", driveBase.motortemps());
   }
 
   @Override

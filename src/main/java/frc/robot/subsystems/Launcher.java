@@ -18,8 +18,8 @@ public class Launcher extends SubsystemBase {
   public CANSparkMax accelMax;
   /** Creates a new Launcher. */
   public Launcher() {
-    upperFx = new TalonFX(4);
-    lowerFx = new TalonFX(5);
+    upperFx = new TalonFX(5);
+    lowerFx = new TalonFX(4);
     accelMax = new CANSparkMax(9, MotorType.kBrushless);
     upperFx.configOpenloopRamp(2);
     lowerFx.configOpenloopRamp(2);

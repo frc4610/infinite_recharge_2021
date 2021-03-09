@@ -12,26 +12,27 @@ public class Pneumatics extends SubsystemBase {
   private Compressor compressor;
   private DoubleSolenoid LIntake;
   private DoubleSolenoid RIntake;
+  
   /** Creates a new Pneumatics. */
   public Pneumatics() {
     compressor = new Compressor();
-    LIntake = new DoubleSolenoid(1, 1, 2);
-    RIntake = new DoubleSolenoid(2, 1, 2);
+    LIntake = new DoubleSolenoid(1, 0, 1);
+    // RIntake = new DoubleSolenoid(2, 1, 2);
   }
 
   public void forward() {
     LIntake.set(DoubleSolenoid.Value.kForward);
-    RIntake.set(DoubleSolenoid.Value.kForward);
+    // RIntake.set(DoubleSolenoid.Value.kForward);
   }
 
   public void reverse() {
     LIntake.set(DoubleSolenoid.Value.kReverse);
-    RIntake.set(DoubleSolenoid.Value.kReverse);
+    // RIntake.set(DoubleSolenoid.Value.kReverse);
   }
 
   public void off() {
     LIntake.set(DoubleSolenoid.Value.kOff);
-    RIntake.set(DoubleSolenoid.Value.kOff);
+    // RIntake.set(DoubleSolenoid.Value.kOff);
   }
 
   public void collectair() {
@@ -40,6 +41,18 @@ public class Pneumatics extends SubsystemBase {
 
   public void stopcollectair() {
     compressor.setClosedLoopControl(false);
+  }
+
+  public boolean pressureSwitch() {
+    return compressor.getPressureSwitchValue();
+  }
+
+  public boolean compressorenabled() {
+    return compressor.enabled();
+  }
+
+  public double compressorcurrent() {
+    return compressor.getCompressorCurrent();
   }
   @Override
   public void periodic() {
