@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.Drive;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Intake;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -18,6 +19,7 @@ import frc.robot.subsystems.DriveBase;
  */
 public class Robot extends TimedRobot {
   public static DriveBase driveBase;
+  public static Intake intake;
   public Drive drive;
   private Command m_autonomousCommand;
 
@@ -34,6 +36,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     //drive = new Drive(driveBase);
     driveBase = new DriveBase();
+    intake = new Intake();
   }
 
   /**
@@ -77,6 +80,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     RobotContainer.startDrive();
+    RobotContainer.startIntakeCommand();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
