@@ -9,37 +9,34 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Pneumatics extends SubsystemBase {
-  private Compressor compressor;
-  private DoubleSolenoid LIntake;
-  private DoubleSolenoid RIntake;
+  public Compressor compressor;
+  public DoubleSolenoid cylinder;
   
   /** Creates a new Pneumatics. */
   public Pneumatics() {
     compressor = new Compressor();
-    LIntake = new DoubleSolenoid(1, 0, 1);
-    // RIntake = new DoubleSolenoid(2, 1, 2);
+    cylinder = new DoubleSolenoid(0, 1);
   }
 
   public void forward() {
-    LIntake.set(DoubleSolenoid.Value.kForward);
-    // RIntake.set(DoubleSolenoid.Value.kForward);
+    cylinder.set(DoubleSolenoid.Value.kForward);
   }
 
   public void reverse() {
-    LIntake.set(DoubleSolenoid.Value.kReverse);
-    // RIntake.set(DoubleSolenoid.Value.kReverse);
+    cylinder.set(DoubleSolenoid.Value.kReverse);
   }
 
   public void off() {
-    LIntake.set(DoubleSolenoid.Value.kOff);
-    // RIntake.set(DoubleSolenoid.Value.kOff);
+    cylinder.set(DoubleSolenoid.Value.kOff);
   }
 
   public void collectair() {
+    compressor.start();
     compressor.setClosedLoopControl(true);
   }
 
   public void stopcollectair() {
+    compressor.stop();
     compressor.setClosedLoopControl(false);
   }
 

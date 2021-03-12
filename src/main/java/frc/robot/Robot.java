@@ -35,7 +35,6 @@ public class Robot extends TimedRobot {
   public IntakeArticulation intakeArticulation;
   private Command m_autonomousCommand;
 
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -46,9 +45,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     driveBase = new DriveBase();
     turret = new Turret();
-    launcher = new Launcher();
     pneumatics = new Pneumatics();
-
+    launcher = new Launcher();
   }
 
   /**
@@ -93,6 +91,7 @@ public class Robot extends TimedRobot {
     RobotContainer.startTurretMove();
     RobotContainer.startLaunch();
     RobotContainer.startIntakeArticulation();
+    pneumatics.collectair();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

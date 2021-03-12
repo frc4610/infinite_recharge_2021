@@ -27,12 +27,12 @@ public class Launcher extends SubsystemBase {
     upperFx.setNeutralMode(NeutralMode.Coast);
     lowerFx.setNeutralMode(NeutralMode.Coast);
     accelMax.setIdleMode(IdleMode.kCoast);
-    lowerFx.setInverted(true);
+    lowerFx.setInverted(false);
   }
   public void launch(ControlMode mode,double launchvalue) {
     upperFx.set(mode, launchvalue);
     lowerFx.set(mode, launchvalue);
-    accelMax.set(.5);
+    accelMax.set(launchvalue/4);
   }
   @Override
   public void periodic() {

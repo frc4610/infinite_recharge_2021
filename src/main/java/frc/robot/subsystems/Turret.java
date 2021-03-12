@@ -13,10 +13,11 @@ import frc.robot.RobotContainer;
 public class Turret extends SubsystemBase {
   /** Creates a new Turret. */
   private TalonSRX turretmotor;
+  @SuppressWarnings("not used")
 
   public Turret() {
     turretmotor = new TalonSRX(8);
-    RobotContainer.initMotor(turretmotor, 1);
+    RobotContainer.initMotor(turretmotor, .5);
   }
 
   @Override

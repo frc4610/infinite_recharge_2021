@@ -26,7 +26,7 @@ import frc.robot.subsystems.Launcher;
     public void execute() {
       double triggerValue = RobotContainer.driver.getRawAxis(3);
       launcher.launch(ControlMode.PercentOutput, triggerValue);
-      if(RobotContainer.driver.getRawAxis(3) >= 0) {
+      if(RobotContainer.driver.getRawAxis(3) > 0) {
         feed.move(ControlMode.PercentOutput, 1, 1);
       }
       else {
