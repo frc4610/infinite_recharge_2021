@@ -12,8 +12,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.Drive;
-import frc.robot.commands.Launch;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.commands.IntakeArticulation;
+import frc.robot.subsystems.Pneumatics;
+import frc.robot.commands.Launch;
 import frc.robot.subsystems.Launcher;
 import frc.robot.commands.TurretMove;
 import frc.robot.subsystems.Turret;
@@ -31,6 +33,11 @@ public class RobotContainer {
  
   // subsystems
   private final static DriveBase driveBase = new DriveBase();
+  private final static Drive tDrive = new Drive(driveBase);
+
+  private final static Pneumatics pneumatics = new Pneumatics();
+  private final static IntakeArticulation intakeArticulation = new IntakeArticulation(pneumatics);
+
   private final static Launcher launcher = new Launcher();
   private final static Turret turret = new Turret();
 
@@ -41,6 +48,7 @@ public class RobotContainer {
   
   //Controllers
   public static Joystick driver = new Joystick(0);
+  
   public static Joystick operator = new Joystick(1);
   public static JoystickButton operatorLeftBumper = new JoystickButton(operator, 5);
   public static JoystickButton operatorRightBumper = new JoystickButton(operator, 6);
@@ -67,9 +75,9 @@ public class RobotContainer {
    */
   public static void initMotor(TalonSRX turretmotor, double peak) {
 
-      turretmotor.configPeakOutputForward(peak);
-      turretmotor.configPeakOutputReverse(-peak);
-      turretmotor.setNeutralMode(NeutralMode.Brake);
+    turretmotor.configPeakOutputForward(peak);
+    turretmotor.configPeakOutputReverse(-peak);
+    turretmotor.setNeutralMode(NeutralMode.Brake);
   }
   public static void initMotor(TalonFX driveFrontL, double peak)
   {
@@ -83,15 +91,16 @@ public class RobotContainer {
     tDrive.schedule(true);
   }
 
-
-  public static void startLauncher()
-  {
+  public static void startLauncher() {
     launch.schedule(true);
   }
 
-
   public static void startTurretMove() {
     turretMove.schedule(true);
-
   }
+  
+  public static void startIntakeArticulation() {
+    intakeArticulation.schedule(true);
+  }
+
 }

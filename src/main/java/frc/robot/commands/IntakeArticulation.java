@@ -4,40 +4,34 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Pneumatics;
 
-public class TurretMove extends CommandBase {
-  /** Creates a new TurretMove. */
-  private Turret sTurret;
-
-  public TurretMove(Turret turret) {
+public class IntakeArticulation extends CommandBase {
+  private Pneumatics pneumatics;
+  /** Creates a new IntakeArticulation. */
+  public IntakeArticulation(Pneumatics air) {
+    pneumatics = air;
     // Use addRequirements() here to declare subsystem dependencies.
-    sTurret = turret;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if(RobotContainer.operatorLeftBumper.get()) {
-      sTurret.move(ControlMode.PercentOutput, 1);
+      pneumatics.actuate();
     }
-    else if(RobotContainer.operatorRightBumper.get()) {
-      sTurret.move(ControlMode.PercentOutput, -1);
-    }
-    else {
-      sTurret.move(ControlMode.PercentOutput, 0);
-    }
-
+    /*else if(RobotContainer.operatorRightBumper.get()) {
+      pneumatics.reverse();
+    }*/
   }
-  
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}

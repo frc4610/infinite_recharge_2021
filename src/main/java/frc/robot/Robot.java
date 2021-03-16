@@ -4,40 +4,36 @@
 
 package frc.robot;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
   //Commands
 import frc.robot.commands.Drive;
 import frc.robot.commands.Launch;
 import frc.robot.commands.TurretMove;
+import frc.robot.commands.IntakeArticulation;
   //Subsystems
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Pneumatics;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to each mode, as described in the TimedRobot
+ * documentation. If you change the name of this class or the package after
+ * creating this project, you must also update the build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
   public static DriveBase driveBase;
   public Drive drive;
-  public static Turret turret;
-  public TurretMove turretMove; 
+  public static Pneumatics pneumatics;
+  public IntakeArticulation intakeArticulation;
   private Command m_autonomousCommand;
   public Launcher launcher;
   public Launch launch;
-
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -48,6 +44,11 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     driveBase = new DriveBase();
+    
+    System.out.println("DriveBase Loaded");
+    try {pneumatics = new Pneumatics();}
+    catch(Exception error){System.out.println(error.getMessage());}
+    
     launcher = new Launcher();
     turret = new Turret();
  
@@ -79,16 +80,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    String trajectoryJSON = "paths/Slalom_Path.wpilib.json";
-  Trajectory trajectory = new Trajectory();
-try {
-  Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-  trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-} catch (IOException ex) {
-  DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-}
-
-    // schedule the autonomous command (example)
+    //schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule(true);
     }
@@ -103,6 +95,7 @@ try {
     RobotContainer.startDrive();
     RobotContainer.startLauncher();
     RobotContainer.startTurretMove();
+    RobotContainer.startIntakeArticulation();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -114,7 +107,9 @@ try {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    SmartDashboard.putNumber("Avr. Motor Temp.", driveBase.motortemps());
+  }
 
   @Override
   public void testInit() {

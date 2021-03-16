@@ -15,13 +15,13 @@ public class DriveBase extends SubsystemBase {
   private TalonFX driveBackL;
   private TalonFX driveBackR;
   private double peak;
-
+  
   /** Creates a new DriveBase. */
   public DriveBase() {
 
     peak = 1; // What is "Peak"?
     peak = 1;
-    driveFrontL = new TalonFX(0);
+    driveFrontL = new TalonFX(11);
     driveFrontR = new TalonFX(1);
     driveBackL = new TalonFX(2);
     driveBackR = new TalonFX(3);
@@ -34,12 +34,16 @@ public class DriveBase extends SubsystemBase {
     RobotContainer.initMotor(driveBackL, peak);
     RobotContainer.initMotor(driveBackR, peak);
   }
-    
+
   public void move(ControlMode mode, double speedL, double speedR) {
     driveFrontR.set(mode, speedL);
     driveFrontL.set(mode, speedR);
   }
 
+  public double motortemps() {
+    return ((driveFrontL.getTemperature() + driveFrontR.getTemperature() + driveBackL.getTemperature()
+        + driveBackR.getTemperature()) / 4);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
