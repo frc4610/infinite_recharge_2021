@@ -8,9 +8,15 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+  //Commands
 import frc.robot.commands.Drive;
+import frc.robot.commands.Launch;
+import frc.robot.commands.TurretMove;
 import frc.robot.commands.IntakeArticulation;
+  //Subsystems
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Launcher;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Pneumatics;
 
 /**
@@ -26,6 +32,8 @@ public class Robot extends TimedRobot {
   public static Pneumatics pneumatics;
   public IntakeArticulation intakeArticulation;
   private Command m_autonomousCommand;
+  public Launcher launcher;
+  public Launch launch;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -36,12 +44,14 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     driveBase = new DriveBase();
+    
     System.out.println("DriveBase Loaded");
     try {pneumatics = new Pneumatics();}
     catch(Exception error){System.out.println(error.getMessage());}
     
-
-
+    launcher = new Launcher();
+    turret = new Turret();
+ 
   }
 
   /**
@@ -83,6 +93,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     RobotContainer.startDrive();
+    RobotContainer.startLauncher();
+    RobotContainer.startTurretMove();
     RobotContainer.startIntakeArticulation();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
