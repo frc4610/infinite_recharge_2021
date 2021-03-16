@@ -10,12 +10,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.Drive;
 import frc.robot.commands.IntakeArticulation;
-import frc.robot.commands.Launch;
-import frc.robot.commands.TurretMove;
 import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Pneumatics;
-import frc.robot.subsystems.Turret;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,10 +23,6 @@ import frc.robot.subsystems.Turret;
 public class Robot extends TimedRobot {
   public static DriveBase driveBase;
   public Drive drive;
-  public static Turret turret;
-  public TurretMove turretMove;
-  public static Launcher launcher;
-  public Launch launch;
   public static Pneumatics pneumatics;
   public IntakeArticulation intakeArticulation;
   private Command m_autonomousCommand;
@@ -44,9 +36,12 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     driveBase = new DriveBase();
-    turret = new Turret();
-    pneumatics = new Pneumatics();
-    launcher = new Launcher();
+    System.out.println("DriveBase Loaded");
+    try {pneumatics = new Pneumatics();}
+    catch(Exception error){System.out.println(error.getMessage());}
+    
+
+
   }
 
   /**
@@ -88,10 +83,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     RobotContainer.startDrive();
-    RobotContainer.startTurretMove();
-    RobotContainer.startLaunch();
     RobotContainer.startIntakeArticulation();
-    pneumatics.collectair();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -104,10 +96,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("Turret Encoder Value", turret.getTurretEncoderValue());
-    SmartDashboard.putBoolean("Compr. Enabled", pneumatics.compressorenabled());
-    SmartDashboard.putBoolean("Pressure Switch", pneumatics.pressureSwitch());
-    SmartDashboard.putNumber("Compr. Current", pneumatics.compressorcurrent());
     SmartDashboard.putNumber("Avr. Motor Temp.", driveBase.motortemps());
   }
 
