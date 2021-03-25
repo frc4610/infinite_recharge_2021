@@ -4,20 +4,21 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Intake extends SubsystemBase {
-  private CANSparkMax IntakeMotor;
-  /** Creates a new Intake. */
-  public Intake() {
-    IntakeMotor = new CANSparkMax(10, MotorType.kBrushless);
+public class Pneumatics extends SubsystemBase {
+  public DoubleSolenoid cylinder;
+
+  /** Creates a new Pneumatics. */
+  public Pneumatics() {
+    cylinder = new DoubleSolenoid(1, 0);
+    cylinder.set(Value.kForward);
   }
 
-  public void intakepc() {
-    IntakeMotor.set(1);
+  public void actuate() {
+    cylinder.toggle();
   }
 
   @Override
