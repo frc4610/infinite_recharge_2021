@@ -14,7 +14,6 @@ import frc.robot.commands.Launch;
 import frc.robot.commands.TurretMove;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Launcher;
-import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.Turret;
 
 /**
@@ -31,7 +30,6 @@ public class Robot extends TimedRobot {
   public TurretMove turretMove;
   public static Launcher launcher;
   public Launch launch;
-  public static Pneumatics pneumatics;
   public IntakeArticulation intakeArticulation;
   private Command m_autonomousCommand;
 
@@ -45,7 +43,6 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     driveBase = new DriveBase();
     turret = new Turret();
-    pneumatics = new Pneumatics();
     launcher = new Launcher();
   }
 
@@ -91,7 +88,6 @@ public class Robot extends TimedRobot {
     RobotContainer.startTurretMove();
     RobotContainer.startLaunch();
     RobotContainer.startIntakeArticulation();
-    pneumatics.collectair();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -105,9 +101,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     SmartDashboard.putNumber("Turret Encoder Value", turret.getTurretEncoderValue());
-    SmartDashboard.putBoolean("Compr. Enabled", pneumatics.compressorenabled());
-    SmartDashboard.putBoolean("Pressure Switch", pneumatics.pressureSwitch());
-    SmartDashboard.putNumber("Compr. Current", pneumatics.compressorcurrent());
     SmartDashboard.putNumber("Avr. Motor Temp.", driveBase.motortemps());
   }
 

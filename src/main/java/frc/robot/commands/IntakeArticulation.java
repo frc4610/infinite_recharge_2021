@@ -7,14 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Pneumatics;
 
 public class IntakeArticulation extends CommandBase {
-  private Pneumatics pneumatics;
   private Intake intake;
   /** Creates a new IntakeArticulation. */
-  public IntakeArticulation(Pneumatics air, Intake intakes) {
-    pneumatics = air;
+  public IntakeArticulation(Intake intakes) {
     intake = intakes;
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -28,17 +25,8 @@ public class IntakeArticulation extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(RobotContainer.driverLeftBumper.get()) {
-      pneumatics.forward();
-    }
-    else if(RobotContainer.driverRightBumper.get()) {
-      pneumatics.reverse();
-    }
-    else if(RobotContainer.operatorAButton.get()) {
+    if(RobotContainer.operatorAButton.get()) {
       intake.intakepc();
-    }
-    else {
-      pneumatics.off();
     }
   }
 

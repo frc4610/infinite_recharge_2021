@@ -19,7 +19,6 @@ import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Feed;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
-import frc.robot.subsystems.Pneumatics;
 import frc.robot.commands.TurretMove;
 import frc.robot.subsystems.Turret;
 
@@ -39,9 +38,8 @@ public class RobotContainer {
   private final static Turret turret = new Turret();
   private final static TurretMove turretMove = new TurretMove(turret);
 
-  private final static Pneumatics pneumatics = new Pneumatics();
   private final static Intake intake = new Intake();
-  private final static IntakeArticulation intakeArticulation = new IntakeArticulation(pneumatics, intake);
+  private final static IntakeArticulation intakeArticulation = new IntakeArticulation(intake);
 
   private final static Launcher launcher = new Launcher();
   private final static Feed feed = new Feed();
