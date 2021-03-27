@@ -36,9 +36,7 @@ public class Launcher extends SubsystemBase
     lowerFx.setNeutralMode(NeutralMode.Coast);
     accelMax.setIdleMode(IdleMode.kCoast);
   }
-
-    public void launch(ControlMode mode,double launchvalue) 
-    {
+  public void launch(ControlMode mode, double launchvalue) {
     upperFx.set(mode, launchvalue);
     lowerFx.set(mode, launchvalue);
     accelMax.set(launchvalue);

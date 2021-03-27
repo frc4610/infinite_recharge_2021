@@ -20,7 +20,6 @@ public class DriveBase extends SubsystemBase {
   public DriveBase() {
 
     peak = 1; // What is "Peak"?
-    peak = 1;
     driveFrontL = new TalonFX(11);
     driveFrontR = new TalonFX(1);
     driveBackL = new TalonFX(2);
@@ -36,8 +35,8 @@ public class DriveBase extends SubsystemBase {
   }
 
   public void move(ControlMode mode, double speedL, double speedR) {
-    driveFrontR.set(mode, speedL);
-    driveFrontL.set(mode, speedR);
+    driveFrontR.set(mode, speedR);
+    driveFrontL.set(mode, speedL);
   }
 
   public double motortemps() {
