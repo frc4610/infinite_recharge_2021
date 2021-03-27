@@ -13,7 +13,10 @@ import frc.robot.commands.IntakeArticulation;
 import frc.robot.commands.Launch;
 import frc.robot.commands.TurretMove;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Feed;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
+import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.Turret;
 
 /**
@@ -28,8 +31,11 @@ public class Robot extends TimedRobot {
   public Drive drive;
   public static Turret turret;
   public TurretMove turretMove;
+  public static Feed feed;
   public static Launcher launcher;
   public Launch launch;
+  public Intake intake;
+  public Pneumatics pneumatics;
   public IntakeArticulation intakeArticulation;
   private Command m_autonomousCommand;
 
@@ -41,9 +47,13 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    driveBase = new DriveBase();
     turret = new Turret();
     launcher = new Launcher();
+    //intake = new Intake();
+    driveBase = new DriveBase();
+    System.out.println("DriveBase Loaded");
+    try {pneumatics = new Pneumatics();}
+    catch(Exception error){System.out.println(error.getMessage());}
   }
 
   /**

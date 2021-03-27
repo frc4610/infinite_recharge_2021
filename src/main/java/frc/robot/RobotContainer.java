@@ -19,6 +19,7 @@ import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Feed;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
+import frc.robot.subsystems.Pneumatics;
 import frc.robot.commands.TurretMove;
 import frc.robot.subsystems.Turret;
 
@@ -39,7 +40,8 @@ public class RobotContainer {
   private final static TurretMove turretMove = new TurretMove(turret);
 
   private final static Intake intake = new Intake();
-  private final static IntakeArticulation intakeArticulation = new IntakeArticulation(intake);
+  private final static Pneumatics pneumatics = new Pneumatics();
+  private final static IntakeArticulation intakeArticulation = new IntakeArticulation(pneumatics, intake);
 
   private final static Launcher launcher = new Launcher();
   private final static Feed feed = new Feed();
@@ -51,9 +53,8 @@ public class RobotContainer {
   public static JoystickButton driverRightBumper = new JoystickButton(driver, 6);
   
   public static Joystick operator = new Joystick(1);
-  public static JoystickButton operatorAButton = new JoystickButton(operator, 0);
+  public static JoystickButton operatorAButton = new JoystickButton(operator, 1);
   public static JoystickButton operatorLeftBumper = new JoystickButton(operator, 5);
-  public static JoystickButton operatorRightBumper = new JoystickButton(operator, 6);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -80,9 +81,9 @@ public class RobotContainer {
     turretmotor.configPeakOutputForward(peak);
     turretmotor.configPeakOutputReverse(-peak);
     turretmotor.setNeutralMode(NeutralMode.Brake);
+    turretmotor.configOpenloopRamp(1);
   }
-  public static void initMotor(TalonFX driveFrontL, double peak)
-  {
+  public static void initMotor(TalonFX driveFrontL, double peak) {
     driveFrontL.configPeakOutputForward(peak);
     driveFrontL.configPeakOutputReverse(-peak);
     driveFrontL.setNeutralMode(NeutralMode.Brake);
