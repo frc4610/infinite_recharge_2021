@@ -17,6 +17,8 @@ import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Launcher;
 import frc.robot.commands.TurretMove;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.VisionSystem;
+import frc.robot.commands.VisionTracking;
 
 
 
@@ -33,15 +35,22 @@ public class RobotContainer {
   private final static DriveBase driveBase = new DriveBase();
   private final static Launcher launcher = new Launcher();
   private final static Turret turret = new Turret();
+  private final static VisionSystem V_SYSTEM = new VisionSystem();
 
   //Commands
   private final static Drive tDrive = new Drive(driveBase);
   private final static Launch launch = new Launch(launcher); 
-  private final static TurretMove turretMove = new TurretMove(turret);
+  private final static TurretMove turretMove = new TurretMove(turret, V_SYSTEM);
+  private final static VisionTracking V_TRACKING = new VisionTracking(V_SYSTEM);
   
   //Controllers
   public static Joystick driver = new Joystick(0);
+  public static JoystickButton driverAButton = new JoystickButton(driver, 1);
+  public static JoystickButton driverLeftBumper = new JoystickButton(driver, 5);
+  public static JoystickButton driverRightBumper = new JoystickButton(driver, 6);
+
   public static Joystick operator = new Joystick(1);
+  public static JoystickButton operatorAButton = new JoystickButton(operator, 1);
   public static JoystickButton operatorLeftBumper = new JoystickButton(operator, 5);
   public static JoystickButton operatorRightBumper = new JoystickButton(operator, 6);
 
@@ -67,9 +76,9 @@ public class RobotContainer {
    */
   public static void initMotor(TalonSRX turretmotor, double peak) {
 
-      turretmotor.configPeakOutputForward(peak);
-      turretmotor.configPeakOutputReverse(-peak);
-      turretmotor.setNeutralMode(NeutralMode.Brake);
+    turretmotor.configPeakOutputForward(peak);
+    turretmotor.configPeakOutputReverse(-peak);
+    turretmotor.setNeutralMode(NeutralMode.Brake);
   }
   public static void initMotor(TalonFX driveFrontL, double peak)
   {
@@ -92,6 +101,9 @@ public class RobotContainer {
 
   public static void startTurretMove() {
     turretMove.schedule(true);
+  }
 
+  public static void startVisionTracking() {
+    V_TRACKING.schedule(true);
   }
 }

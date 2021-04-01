@@ -13,10 +13,11 @@ import frc.robot.RobotContainer;
 public class Turret extends SubsystemBase {
   /** Creates a new Turret. */
   private TalonSRX turretmotor;
+  @SuppressWarnings("not used")
 
   public Turret() {
-    turretmotor = new TalonSRX(4);
-    RobotContainer.initMotor(turretmotor, 1);
+    turretmotor = new TalonSRX(8);
+    RobotContainer.initMotor(turretmotor, .5);
   }
 
   @Override
@@ -28,4 +29,16 @@ public class Turret extends SubsystemBase {
     turretmotor.set(percentoutput, d);
   }
 
+  public void spinturret(double position) {
+    turretmotor.set(ControlMode.Position, position);
+  }
+
+  public double getTurretEncoderValue() {
+    return turretmotor.getSelectedSensorPosition();
+    // 4096 pulses/revolution / 43.2 degrees/revolution = 94.81 pulses/degree
+  }
+
+  public void resetEncoder() {
+    turretmotor.setSelectedSensorPosition(0);
+  }
 }

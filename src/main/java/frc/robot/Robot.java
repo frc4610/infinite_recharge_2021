@@ -4,24 +4,20 @@
 
 package frc.robot;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
   //Commands
 import frc.robot.commands.Drive;
 import frc.robot.commands.Launch;
 import frc.robot.commands.TurretMove;
-  //Subsystems
+import frc.robot.commands.VisionTracking;
+//Subsystems
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.VisionSystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -35,8 +31,10 @@ public class Robot extends TimedRobot {
   public static Turret turret;
   public TurretMove turretMove; 
   private Command m_autonomousCommand;
-  public Launcher launcher;
+  public static Launcher launcher;
   public Launch launch;
+  public static VisionSystem vs;
+  public VisionTracking vt;
 
 
   /**
@@ -50,6 +48,9 @@ public class Robot extends TimedRobot {
     driveBase = new DriveBase();
     launcher = new Launcher();
     turret = new Turret();
+    vs = new VisionSystem();
+  
+
  
   }
 
@@ -79,15 +80,6 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    String trajectoryJSON = "paths/Slalom_Path.wpilib.json";
-  Trajectory trajectory = new Trajectory();
-try {
-  Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-  trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-} catch (IOException ex) {
-  DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-}
-
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule(true);
@@ -103,6 +95,7 @@ try {
     RobotContainer.startDrive();
     RobotContainer.startLauncher();
     RobotContainer.startTurretMove();
+    RobotContainer.startVisionTracking();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -114,7 +107,8 @@ try {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+  }
 
   @Override
   public void testInit() {
