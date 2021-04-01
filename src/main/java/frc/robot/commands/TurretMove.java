@@ -18,6 +18,8 @@ public class TurretMove extends CommandBase {
   private VisionSystem visionSystem;
   private double actualangle;
   private double error;
+  private double actualangle;
+
 
   public TurretMove(Turret turret, VisionSystem vSystem) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -47,6 +49,11 @@ public class TurretMove extends CommandBase {
     else if(RobotContainer.driverAButton.get() & Math.abs(error) > 0.05 & actualangle >= 0 & actualangle <= 17007) {
       visionSystem.vLEDon();
       sTurret.move(ControlMode.PercentOutput, -error );
+    if(RobotContainer.driverLeftBumper.get() & actualangle < 17007) {
+      sTurret.move(ControlMode.PercentOutput, .35);
+    }
+    else if(RobotContainer.driverRightBumper.get() & actualangle > 0) {
+      sTurret.move(ControlMode.PercentOutput, -.35);
     }
     else {
       sTurret.move(ControlMode.PercentOutput, 0);

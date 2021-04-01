@@ -4,41 +4,42 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Pneumatics;
 
-public class Drive extends CommandBase {
-  private DriveBase tDriveBase;
-  /** Creates a new Drive. */
-  public Drive(DriveBase drivebase) {
-    tDriveBase = drivebase;
+public class IntakeArticulation extends CommandBase {
+  private Intake intake;
+  private Pneumatics pneumatics;
+  /** Creates a new IntakeArticulation. */
+  public IntakeArticulation(Pneumatics p, Intake intakes) {
+    intake = intakes;
+    pneumatics = p;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    double joyValueL = RobotContainer.driver.getRawAxis(5);
-    double joyValueR = RobotContainer.driver.getRawAxis(1);
-    double joyValueL = RobotContainer.driver.getRawAxis(1);
-    double joyValueR = RobotContainer.driver.getRawAxis(5);
-    tDriveBase.move(ControlMode.PercentOutput, -joyValueL, -joyValueR);
-
+    if(RobotContainer.operatorAButton.get()) {
+      intake.intakepc(-.5);
+    }
+    else if(RobotContainer.operatorLeftBumper.get()) { 
+      pneumatics.actuate();
+    }
+    else {
+      intake.intakepc(0);
+    }
   }
-
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    tDriveBase.move(ControlMode.PercentOutput, 0, 0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

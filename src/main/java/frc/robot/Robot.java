@@ -8,21 +8,26 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-  //Commands
 import frc.robot.commands.Drive;
+import frc.robot.commands.IntakeArticulation;
 import frc.robot.commands.Launch;
 import frc.robot.commands.TurretMove;
 import frc.robot.commands.VisionTracking;
 //Subsystems
+ main
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Feed;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
+import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.VisionSystem;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to each mode, as described in the TimedRobot
+ * documentation. If you change the name of this class or the package after
+ * creating this project, you must also update the build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
@@ -35,6 +40,14 @@ public class Robot extends TimedRobot {
   public Launch launch;
   public static VisionSystem vs;
   public VisionTracking vt;
+  public TurretMove turretMove;
+  public static Feed feed;
+  public static Launcher launcher;
+  public Launch launch;
+  public Intake intake;
+  public Pneumatics pneumatics;
+  public IntakeArticulation intakeArticulation;
+  private Command m_autonomousCommand;
 
 
   /**
@@ -45,13 +58,15 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    driveBase = new DriveBase();
-    launcher = new Launcher();
     turret = new Turret();
     vs = new VisionSystem();
-  
-
- 
+    launcher = new Launcher();
+    //intake = new Intake();
+    driveBase = new DriveBase();
+    System.out.println("DriveBase Loaded");
+    try {pneumatics = new Pneumatics();}
+    catch(Exception error){System.out.println(error.getMessage());
+    }
   }
 
   /**
@@ -80,7 +95,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    // schedule the autonomous command (example)
+    //schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule(true);
     }
@@ -93,9 +108,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     RobotContainer.startDrive();
-    RobotContainer.startLauncher();
     RobotContainer.startTurretMove();
     RobotContainer.startVisionTracking();
+    RobotContainer.startLaunch();
+    RobotContainer.startIntakeArticulation();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -108,6 +124,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    SmartDashboard.putNumber("Turret Encoder Value", turret.getTurretEncoderValue());
+    SmartDashboard.putNumber("Avr. Motor Temp.", driveBase.motortemps());
   }
 
   @Override
