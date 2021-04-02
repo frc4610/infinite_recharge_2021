@@ -31,7 +31,7 @@ public class Launch extends CommandBase {
     double triggerValue = (RobotContainer.driver.getRawAxis(3)/1.25 + .2);
       launcher.launch(ControlMode.PercentOutput, triggerValue);
       if(RobotContainer.driver.getRawAxis(3) > 0) {
-        feed.move(ControlMode.PercentOutput, .4, .4);
+        feed.move(ControlMode.PercentOutput, 1, 1);
       }
       else {
         feed.move(ControlMode.PercentOutput, 0, 0);

@@ -14,7 +14,6 @@ import frc.robot.commands.Launch;
 import frc.robot.commands.TurretMove;
 import frc.robot.commands.VisionTracking;
 //Subsystems
- main
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Feed;
 import frc.robot.subsystems.Intake;
@@ -40,14 +39,10 @@ public class Robot extends TimedRobot {
   public Launch launch;
   public static VisionSystem vs;
   public VisionTracking vt;
-  public TurretMove turretMove;
   public static Feed feed;
-  public static Launcher launcher;
-  public Launch launch;
   public Intake intake;
   public Pneumatics pneumatics;
   public IntakeArticulation intakeArticulation;
-  private Command m_autonomousCommand;
 
 
   /**

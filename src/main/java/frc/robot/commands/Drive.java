@@ -25,9 +25,6 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    double joyValueL = RobotContainer.driver.getRawAxis(5);
-    double joyValueR = RobotContainer.driver.getRawAxis(1);
     double joyValueL = RobotContainer.driver.getRawAxis(1);
     double joyValueR = RobotContainer.driver.getRawAxis(5);
     tDriveBase.move(ControlMode.PercentOutput, -joyValueL, -joyValueR);

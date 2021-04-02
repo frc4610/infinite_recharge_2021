@@ -35,35 +35,28 @@ import frc.robot.commands.VisionTracking;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  //Subsystems
   private final static DriveBase driveBase = new DriveBase();
+  private final static Feed feed = new Feed();
   private final static Launcher launcher = new Launcher();
   private final static Turret turret = new Turret();
   private final static VisionSystem V_SYSTEM = new VisionSystem();
+  private final static Intake intake = new Intake();
+  private final static Pneumatics pneumatics = new Pneumatics();
 
   //Commands
   private final static Drive tDrive = new Drive(driveBase);
-  private final static Launch launch = new Launch(launcher); 
+  private final static Launch launch = new Launch(launcher, feed); 
   private final static TurretMove turretMove = new TurretMove(turret, V_SYSTEM);
   private final static VisionTracking V_TRACKING = new VisionTracking(V_SYSTEM);
-  private final static Drive tDrive = new Drive(driveBase);
-
-  private final static Turret turret = new Turret();
-  private final static TurretMove turretMove = new TurretMove(turret);
-
-  private final static Intake intake = new Intake();
-  private final static Pneumatics pneumatics = new Pneumatics();
   private final static IntakeArticulation intakeArticulation = new IntakeArticulation(pneumatics, intake);
-
-  private final static Launcher launcher = new Launcher();
-  private final static Feed feed = new Feed();
-  private final static Launch launch = new Launch(launcher, feed);
   
+  //Controller Inputs
   public static Joystick driver = new Joystick(0);
   public static JoystickButton driverAButton = new JoystickButton(driver, 1);
   public static JoystickButton driverLeftBumper = new JoystickButton(driver, 5);
   public static JoystickButton driverRightBumper = new JoystickButton(driver, 6);
-  public static JoystickButton driverLeftBumper = new JoystickButton(driver, 5);
-  public static JoystickButton driverRightBumper = new JoystickButton(driver, 6);
+
   public static Joystick operator = new Joystick(1);
   public static JoystickButton operatorAButton = new JoystickButton(operator, 1);
   public static JoystickButton operatorLeftBumper = new JoystickButton(operator, 5);
@@ -89,11 +82,10 @@ public class RobotContainer {
    */
 
   public static void initMotor(TalonSRX turretmotor, double peak) {
-
     turretmotor.configPeakOutputForward(peak);
     turretmotor.configPeakOutputReverse(-peak);
     turretmotor.setNeutralMode(NeutralMode.Brake);
-    turretmotor.configOpenloopRamp(1);
+    turretmotor.configOpenloopRamp(.25);
   }
   public static void initMotor(TalonFX driveFrontL, double peak) {
     driveFrontL.configPeakOutputForward(peak);
@@ -113,14 +105,11 @@ public class RobotContainer {
     launch.schedule(true);
   }
 
-  public static void startTurretMove() {
-    turretMove.schedule(true);
-  }
-
   public static void startVisionTracking() {
     V_TRACKING.schedule(true);
+  }
+
   public static void startIntakeArticulation() {
     intakeArticulation.schedule(true);
   }
-
 }
