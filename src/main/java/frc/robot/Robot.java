@@ -12,7 +12,6 @@ import frc.robot.commands.Drive;
 import frc.robot.commands.IntakeArticulation;
 import frc.robot.commands.Launch;
 import frc.robot.commands.TurretMove;
-import frc.robot.commands.VisionTracking;
 //Subsystems
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Feed;
@@ -38,7 +37,6 @@ public class Robot extends TimedRobot {
   public static Launcher launcher;
   public Launch launch;
   public static VisionSystem vs;
-  public VisionTracking vt;
   public static Feed feed;
   public Intake intake;
   public Pneumatics pneumatics;
@@ -73,6 +71,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Avr. Motor Temp.", driveBase.motortemps());
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -104,7 +103,6 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     RobotContainer.startDrive();
     RobotContainer.startTurretMove();
-    RobotContainer.startVisionTracking();
     RobotContainer.startLaunch();
     RobotContainer.startIntakeArticulation();
     // This makes sure that the autonomous stops running when
@@ -120,7 +118,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     SmartDashboard.putNumber("Turret Encoder Value", turret.getTurretEncoderValue());
-    SmartDashboard.putNumber("Avr. Motor Temp.", driveBase.motortemps());
   }
 
   @Override

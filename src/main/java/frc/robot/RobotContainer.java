@@ -5,7 +5,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -23,7 +22,6 @@ import frc.robot.subsystems.Pneumatics;
 import frc.robot.commands.TurretMove;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.VisionSystem;
-import frc.robot.commands.VisionTracking;
 
 
 /**
@@ -48,18 +46,25 @@ public class RobotContainer {
   private final static Drive tDrive = new Drive(driveBase);
   private final static Launch launch = new Launch(launcher, feed); 
   private final static TurretMove turretMove = new TurretMove(turret, V_SYSTEM);
-  private final static VisionTracking V_TRACKING = new VisionTracking(V_SYSTEM);
   private final static IntakeArticulation intakeArticulation = new IntakeArticulation(pneumatics, intake);
   
   //Controller Inputs
   public static Joystick driver = new Joystick(0);
   public static JoystickButton driverAButton = new JoystickButton(driver, 1);
+  public static JoystickButton driverBButton = new JoystickButton(driver, 2);
+  public static JoystickButton driverXButton = new JoystickButton(driver, 3);
+  public static JoystickButton driverYButton = new JoystickButton(driver, 4);
   public static JoystickButton driverLeftBumper = new JoystickButton(driver, 5);
   public static JoystickButton driverRightBumper = new JoystickButton(driver, 6);
+  public static JoystickButton driverLeftJoystickButton = new JoystickButton(driver, 9);
 
   public static Joystick operator = new Joystick(1);
   public static JoystickButton operatorAButton = new JoystickButton(operator, 1);
+  public static JoystickButton operatorBButton = new JoystickButton(operator, 2);
+  public static JoystickButton operatorXButton = new JoystickButton(operator, 3);
+  public static JoystickButton operatorYButton = new JoystickButton(operator, 4);
   public static JoystickButton operatorLeftBumper = new JoystickButton(operator, 5);
+  public static JoystickButton operatorRightBumper = new JoystickButton(operator, 6);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -87,11 +92,6 @@ public class RobotContainer {
     turretmotor.setNeutralMode(NeutralMode.Brake);
     turretmotor.configOpenloopRamp(.25);
   }
-  public static void initMotor(TalonFX driveFrontL, double peak) {
-    driveFrontL.configPeakOutputForward(peak);
-    driveFrontL.configPeakOutputReverse(-peak);
-    driveFrontL.setNeutralMode(NeutralMode.Brake);
-  }
 
   public static void startDrive() {
     tDrive.schedule(true);
@@ -103,10 +103,6 @@ public class RobotContainer {
 
   public static void startLaunch() {
     launch.schedule(true);
-  }
-
-  public static void startVisionTracking() {
-    V_TRACKING.schedule(true);
   }
 
   public static void startIntakeArticulation() {

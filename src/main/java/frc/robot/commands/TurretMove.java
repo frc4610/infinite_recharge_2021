@@ -39,18 +39,19 @@ public class TurretMove extends CommandBase {
     visionSystem.visionStoreValues();
     error = visionSystem.getXValue()/50;
     SmartDashboard.putNumber("Turret Error", error);
-    if(RobotContainer.driverLeftBumper.get() & actualangle < 17007 & !RobotContainer.driverAButton.get()) {
+    if(RobotContainer.operatorLeftBumper.get() & actualangle < 17007 & !RobotContainer.driverAButton.get()) {
       sTurret.move(ControlMode.PercentOutput, .35);
     }
-    else if(RobotContainer.driverRightBumper.get() & actualangle > 0 & !RobotContainer.driverAButton.get()) {
+    else if(RobotContainer.operatorRightBumper.get() & actualangle > 0 & !RobotContainer.driverAButton.get()) {
       sTurret.move(ControlMode.PercentOutput, -.35);
     }
-    else if(RobotContainer.driverAButton.get() & Math.abs(error) > 0.05 & actualangle >= 0 & actualangle <= 17007) {
+    else if(RobotContainer.operatorBButton.get() & Math.abs(error) > 0.05) {
       visionSystem.vLEDon();
-      sTurret.move(ControlMode.PercentOutput, -error );
+      sTurret.move(ControlMode.PercentOutput, -error);
     }
     else {
       sTurret.move(ControlMode.PercentOutput, 0);
+      visionSystem.vLEDoff();
     }
   }
   

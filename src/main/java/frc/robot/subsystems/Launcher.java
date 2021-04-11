@@ -27,7 +27,7 @@ public class Launcher extends SubsystemBase
   {
     upperFx = new TalonFX(5);
     lowerFx = new TalonFX(4);
-    accelMax = new CANSparkMax(9, MotorType.kBrushless);
+    accelMax = new CANSparkMax(12, MotorType.kBrushless);
     
     upperFx.configOpenloopRamp(2);
     lowerFx.configOpenloopRamp(2);
@@ -39,7 +39,7 @@ public class Launcher extends SubsystemBase
   public void launch(ControlMode mode, double launchvalue) {
     upperFx.set(mode, launchvalue);
     lowerFx.set(mode, launchvalue);
-    accelMax.set(launchvalue);
+    accelMax.set(-launchvalue);
     }
 
   @Override

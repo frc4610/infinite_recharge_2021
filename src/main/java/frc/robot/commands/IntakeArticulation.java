@@ -27,11 +27,14 @@ public class IntakeArticulation extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(RobotContainer.operatorAButton.get()) {
+    if(RobotContainer.driver.getRawAxis(3) > 0) {
       intake.intakepc(-.5);
     }
-    else if(RobotContainer.operatorLeftBumper.get()) { 
-      pneumatics.actuate();
+    else if(RobotContainer.driverLeftBumper.get()) { 
+      pneumatics.forward();
+    }
+    else if(RobotContainer.driverRightBumper.get()) {
+      pneumatics.reverse();
     }
     else {
       intake.intakepc(0);
