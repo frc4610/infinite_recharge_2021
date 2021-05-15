@@ -27,28 +27,26 @@ public class Launch extends CommandBase {
 // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    timer.reset();
+    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double triggerValue = (RobotContainer.operator.getRawAxis(3)/1.25 + .2);
-      if(RobotContainer.operator.getRawAxis(3) > 0) {
-        launcher.launch(ControlMode.PercentOutput, triggerValue);
-        timer.start();
-        if(timer.get()  > 2) {
-          feed.move(ControlMode.PercentOutput, .8, .8);
-        }
-        else {
-          feed.move(ControlMode.PercentOutput, 0, 0);
-        }
+    if(RobotContainer.operator.getRawAxis(3) > 0) {
+      launcher.launch(ControlMode.PercentOutput, triggerValue);
+      timer.start();
+      if(timer.get()  > 2) {
+        feed.move(ControlMode.PercentOutput, .8, .8);
       }
-      else {
-        feed.move(ControlMode.PercentOutput, 0, 0);
-        launcher.launch(ControlMode.PercentOutput, .2);
-        timer.reset();
-      }
+    }
+    else {
+      feed.move(ControlMode.PercentOutput, 0, 0);
+      launcher.launch(ControlMode.PercentOutput, .2);
+      timer.reset();
+    }
   }
 
   // Called once the command ends or is interrupted.

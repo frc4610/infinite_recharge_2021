@@ -14,7 +14,7 @@ public class Turret extends SubsystemBase {
   /** Creates a new Turret. */
   private TalonSRX turretmotor;
   private double peak;
-  @SuppressWarnings("not used")
+  //@SuppressWarnings("not used")
 
   public Turret() {
     peak = 1;

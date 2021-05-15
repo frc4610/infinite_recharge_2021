@@ -5,11 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Drive;
 import frc.robot.commands.IntakeArticulation;
+import frc.robot.commands.IntakePC;
 import frc.robot.commands.Launch;
 import frc.robot.commands.TurretMove;
 //Subsystems
@@ -41,6 +44,7 @@ public class Robot extends TimedRobot {
   public Intake intake;
   public Pneumatics pneumatics;
   public IntakeArticulation intakeArticulation;
+  public Timer timer = new Timer();
 
 
   /**
@@ -89,6 +93,8 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    timer.reset();
+    timer.start();
     //schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule(true);
@@ -97,7 +103,11 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    new SequentialCommandGroup(
+      new IntakePC(intake, -.5)
+    );
+  }
 
   @Override
   public void teleopInit() {
